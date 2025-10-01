@@ -2,29 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasFactory;
+    protected $table = 'users';
 
-    protected $table = 'User'; // O 'users' si renombraste la tabla
     protected $fillable = [
-        'login',
-        'password',
-        'person_id',
-        'role_id'
+        'login', 'password', 'person_id', 'role_id'
     ];
 
-    public function studentDetails()
+    public function person()
     {
-        return $this->hasOne(StudentDetail::class, 'user_id');
+        return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     public function aspirant()
     {
         return $this->hasOne(Aspirant::class, 'id_user');
+    }
+
+    public function studentDetails()
+    {
+        return $this->hasOne(StudentDetails::class, 'user_id');
     }
 
     public function visits()
@@ -34,6 +39,11 @@ class User extends Authenticatable
 
     public function calls()
     {
-        return $this->hasMany(CallModel::class, 'user_id');
+        return $this->hasMany(Call::class, 'user_id');
+    }
+
+    public function userAnswers()
+    {
+        return $this->hasMany(UserAnswer::class, 'user_id');
     }
 }
