@@ -2,42 +2,47 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Aspirant extends Model
 {
-    use HasFactory;
+    protected $table = 'aspirants';
 
-    protected $table = 'aspirant';
-    protected $fillable = [
-        'id_user',
-        'id_program',
-        'candidate_program'
-    ];
+    protected $fillable = ['user_id'];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function aspirantVisits()
+    // Relación N:M con programas a través de aspirant_programs
+    public function programs()
     {
-        return $this->hasMany(AspirantVisit::class, 'id_aspirant');
+        return $this->belongsToMany(
+            Program::class,
+            'aspirant_programs',
+            'aspirant_id',
+            'program_id'
+        )->withPivot(['enrollment_date', 'status']);
     }
 
-    public function aspirantAdvertisings()
+    public function aspirantPrograms()
     {
-        return $this->hasMany(AspirantAdvertising::class, 'id_aspirant');
+        return $this->hasMany(AspirantProgram::class, 'aspirant_id');
     }
 
     public function calls()
     {
-        return $this->hasMany(CallModel::class, 'aspirant_id');
+        return $this->hasMany(Call::class, 'aspirant_id');
     }
 
-    public function processes()
+    public function interviews()
     {
-        return $this->hasMany(Process::class, 'id_aspirant');
+        return $this->hasMany(Interview::class, 'aspirant_id');
+    }
+
+    public function visits()
+    {
+        return $this->hasMany(Visit::class, 'aspirant_id');
     }
 }

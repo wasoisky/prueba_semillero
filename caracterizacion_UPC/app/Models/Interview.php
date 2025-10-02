@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Visit extends Model
+class Interview extends Model
 {
-    protected $table = 'visits';
+    protected $table = 'interviews';
 
-    protected $fillable = ['aspirant_id', 'who_went', 'date', 'place', 'purpose', 'user_id'];
+    protected $fillable = ['aspirant_id', 'user_id', 'date', 'description', 'status'];
 
     public function aspirant()
     {
@@ -18,5 +18,10 @@ class Visit extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function interviewQuestions()
+    {
+        return $this->hasMany(InterviewQuestion::class, 'interview_id');
     }
 }

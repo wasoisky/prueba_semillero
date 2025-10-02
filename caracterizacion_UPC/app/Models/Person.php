@@ -9,14 +9,14 @@ class Person extends Model
     protected $table = 'person';
 
     protected $fillable = [
-        'dni_type_id', 'dni', 'name', 'lastname', 'phone', 'address',
+        'dni_id', 'name', 'lastname', 'phone', 'address',
         'email', 'city_id', 'birthday', 'biological_gender',
         'latitude', 'longitude'
     ];
 
-    public function dniType()
+    public function dni()
     {
-        return $this->belongsTo(DniType::class, 'dni_type_id');
+        return $this->belongsTo(Dni::class, 'dni_id');
     }
 
     public function city()

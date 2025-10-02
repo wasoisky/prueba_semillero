@@ -10,8 +10,8 @@ class DniType extends Model
 
     protected $fillable = ['description', 'abbreviation'];
 
-    public function persons()
+    public function dnis()
     {
-        return $this->hasMany(Person::class, 'dni_type_id');
+        return $this->hasMany(Dni::class, 'dni_type_id');
     }
 }
