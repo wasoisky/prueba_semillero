@@ -8,10 +8,10 @@ class InterviewOption extends Model
 {
     protected $table = 'interview_options';
 
-    protected $fillable = ['question_id', 'description'];
+    protected $fillable = ['question_bank_id', 'description'];
 
     public function question()
     {
-        return $this->belongsTo(InterviewQuestionBank::class, 'question_id');
+        return $this->belongsTo(InterviewQuestionBank::class, 'question_bank_id');
     }
 }
