@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('aspirants', function (Blueprint $table) {
             $table->id(); // id (PK)
 
-            // Siguiendo los nombres del diagrama:
+
             // Si ya existen tablas users y programs, estas FKs funcionarán.
             // Si aún no existen, cambia '->constrained()' por solo 'unsignedBigInteger' temporalmente.
             $table->foreignId('id_user')
